@@ -7,6 +7,7 @@ import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.litongjava.open.chat.client.OpenAiClient;
 import com.litongjava.open.chat.constants.OpenAiConstatns;
+import com.litongjava.open.chat.services.OpenaiV1ChatService;
 import com.litongjava.tio.boot.http.TioControllerContext;
 import com.litongjava.tio.core.ChannelContext;
 import com.litongjava.tio.core.Tio;
@@ -30,6 +31,8 @@ import okhttp3.ResponseBody;
 
 @Slf4j
 public class OpenaiV1ChatHandler {
+  
+  private OpenaiV1ChatService openaiV1ChatService=new OpenaiV1ChatService();
 
   public HttpResponse completions(HttpRequest httpRequest) {
     long start = System.currentTimeMillis();
@@ -69,6 +72,7 @@ public class OpenaiV1ChatHandler {
       // 无需移除
       // Tio.remove(channelContext, "remove");
     } else {
+      openAiRequestVo=openaiV1ChatService.beforeCompletions(openAiRequestVo);
       Response response = OpenAiClient.completions(headers, openAiRequestVo.toString());
       HttpServerResponseUtils.fromOkHttp(response, httpResponse);
       httpResponse.setHasGzipped(true);
@@ -143,6 +147,7 @@ public class OpenaiV1ChatHandler {
             String line;
             while ((line = body.source().readUtf8Line()) != null) {
               // 必须添加一个回车符号
+              line=openaiV1ChatService.processLine(line);
               byte[] bytes = (line + "\n").getBytes();
               // byte[] bytes = body.bytes();
               SseBytesPacket ssePacket = new SseBytesPacket(ChunkEncoder.encodeChunk(bytes));
@@ -150,12 +155,12 @@ public class OpenaiV1ChatHandler {
               Tio.send(channelContext, ssePacket);
               // 异步拼接
               appendResponse(complectionContent, line);
+              openaiV1ChatService.complectionContent(complectionContent);
             }
             // 发送一个大小为 0 的 chunk 以表示消息结束
             byte[] zeroChunk = ChunkEncoder.encodeChunk(new byte[0]);
             SseBytesPacket endPacket = new SseBytesPacket(zeroChunk);
             Tio.send(channelContext, endPacket);
-            log.info("complectionContent:{}", complectionContent);
           }
         }
 
