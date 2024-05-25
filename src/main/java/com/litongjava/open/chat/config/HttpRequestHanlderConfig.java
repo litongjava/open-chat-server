@@ -22,8 +22,10 @@ public class HttpRequestHanlderConfig {
     r.add("/openai/v1/models", openAiV1Handler::models);
     
     OpenaiV1ChatHandler openaiV1ChatHandler = new OpenaiV1ChatHandler();
-    r.add("/openai/v1/chat/completions", openaiV1ChatHandler::completions);
+    r.add("/***/chat/completions", openaiV1ChatHandler::completions);
     r.add("/v1/chat/completions", openaiV1ChatHandler::completions);
+    r.add("/openai/v1/chat/completions", openaiV1ChatHandler::completions);
+    
     
     GetConfigHandler getConfigHandler = new GetConfigHandler();
     r.add("/get/config", getConfigHandler::index);

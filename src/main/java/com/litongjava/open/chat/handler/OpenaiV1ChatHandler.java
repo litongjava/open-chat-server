@@ -6,7 +6,6 @@ import java.util.Map;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.jfinal.kit.Kv;
-import com.jfinal.kit.StrKit;
 import com.litongjava.open.chat.client.OpenAiClient;
 import com.litongjava.open.chat.constants.OpenAiConstatns;
 import com.litongjava.open.chat.services.OpenaiV1ChatService;
@@ -132,8 +131,10 @@ public class OpenaiV1ChatHandler {
           httpResponse.setSend(true);
           HttpServerResponseUtils.fromOkHttp(response, httpResponse);
           httpResponse.setHasGzipped(true);
+          httpResponse.removeHeaders("Content-Length");
           // 响应
           Tio.send(channelContext, httpResponse);
+          return;
         }
         // 设置为立即发送,不使用队列
         // channelContext.tioConfig.setUseQueueSend(false);
