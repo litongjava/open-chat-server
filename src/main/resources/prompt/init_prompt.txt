@@ -1,0 +1,36 @@
+{
+  "messages":
+  [
+    {
+      "role": "system",
+      "content": "#include("init_prompt_message.txt")"
+    }
+  ],
+  "tools":
+  [
+    {
+      "type": "function",
+      "function":
+      {
+        "name": "find",
+        "description": "根据sql查询数据库",
+        "parameters":
+        {
+          "type": "object",
+          "properties":
+          {
+            "sql":
+            {
+              "description": "需要执行的sql语句",
+              "type": "string"
+            }
+          },
+          "required":
+          [
+            "sql"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -28,9 +28,9 @@ public class OpenAiV1Handler {
     */
     HttpResponse httpResponse = TioControllerContext.getResponse();
     HttpServerResponseUtils.enableCORS(httpResponse, new HttpCors());
-    
+
     Kv model = Kv.create();
-    model.set("id", "hawaii.edu");
+    model.set("id", "litongjava");
     model.set("object", "model");
     model.set("created", 1698785189);
     model.set("owned_by", "system");
