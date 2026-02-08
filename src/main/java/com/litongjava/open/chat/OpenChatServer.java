@@ -1,6 +1,6 @@
 package com.litongjava.open.chat;
 
-import com.litongjava.jfinal.aop.annotation.AComponentScan;
+import com.litongjava.annotation.AComponentScan;
 import com.litongjava.open.chat.config.OpenChatServerConfig;
 import com.litongjava.tio.boot.TioApplication;
 
