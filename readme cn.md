@@ -2,6 +2,13 @@
 
 基于 Java 语言的大模型后端应用开发框架，目前已经支持 open-webui。
 
+## 主要功能
+- 1.执行linux命令
+- 2.执行python代码
+- 3.执行javascript代码
+- 4.执行golang代码
+- 5.执行c and c++ 代码
+
 ## 启动
 
 ```sh

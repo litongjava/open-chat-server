@@ -31,6 +31,30 @@
           ]
         }
       }
+    },
+    {
+      "type": "function",
+      "function":
+      {
+        "name": "execCmd",
+        "description": "执行操作系统命令",
+        "parameters":
+        {
+          "type": "object",
+          "properties":
+          {
+            "cmd":
+            {
+              "description": "需要执行的命令",
+              "type": "string"
+            }
+          },
+          "required":
+          [
+            "sql"
+          ]
+        }
+      }
     }
   ]
 }
